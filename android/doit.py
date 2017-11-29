@@ -38,9 +38,9 @@ STDIN_PORT = 1235
 LIBC_TEXT_STSTEM_OFFSET = 0x34ea04 + 1 # system + 1
 LIBC_SOME_BLX_OFFSET = 0x585b
 
-# Aligned to 4 inside the name on the bss (same for both supported phones)
-BSS_ACL_REMOTE_NAME_OFFSET = 0x202ee4
-BLUETOOTH_BSS_SOME_VAR_OFFSET = 0x14b244
+# Aligned to 4 inside the name on the bss
+BSS_ACL_REMOTE_NAME_OFFSET = 0x150eb4
+BLUETOOTH_BSS_SOME_VAR_OFFSET = 0x22e155
 
 MAX_BT_NAME = 0xf5
 
